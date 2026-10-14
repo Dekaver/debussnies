@@ -1,13 +1,34 @@
-import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Stack } from 'expo-router';
 
-export default function RootLayout() {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }}>
-        {/* Sembunyikan header untuk semua router utama, termasuk group (drawer) */}
-        <Stack.Screen name="home" options={{ headerShown: false }} />
-      </Stack>
-    </SafeAreaView>
-  );
+import { SessionProvider, useSession } from '@/ctx';
+import { SplashScreenController } from '@/splash';
+
+function RootNavigator() {
+    const { session } = useSession();
+
+    return (
+        <Stack
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Protected guard={!session}>
+                <Stack.Screen name="(app)" />
+            </Stack.Protected>
+
+            <Stack.Protected guard={!!session}>
+                <Stack.Screen name="sign-in" />
+            </Stack.Protected>
+        </Stack>
+    );
+}
+
+export default function Root() {
+    // Set up the auth context and render your layout inside of it.
+    return (
+        <SessionProvider>
+            <SplashScreenController />
+            <RootNavigator />
+        </SessionProvider>
+    );
 }
