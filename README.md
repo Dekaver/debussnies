@@ -2,6 +2,21 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Konfigurasi autentikasi
+
+Tambahkan konfigurasi berikut ke `.env` lokal di folder aplikasi:
+
+```dotenv
+EXPO_PUBLIC_API_URL=http://10.0.2.2:3000/api
+EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID=your-google-oauth-client-id
+```
+
+`10.0.2.2` digunakan Android Emulator untuk mengakses server lokal di komputer. Untuk perangkat fisik, gunakan alamat IP LAN komputer; untuk produksi gunakan URL HTTPS server.
+
+Buat OAuth client ID tipe Web di Google Cloud Console dan daftarkan URI redirect aplikasi `debussnies://auth/callback`. Nilai client ID yang sama perlu diizinkan di server melalui `GOOGLE_CLIENT_IDS` (beberapa client ID dapat dipisahkan dengan koma). Login Google perlu dijalankan di development build atau aplikasi terpasang agar scheme redirect aplikasi aktif; setelah mengubah `.env`, mulai ulang Expo.
+
+Login email/password memakai `POST /auth/sign-in`. Login Google mengambil nilai `state` acak dari `POST /auth/google/challenge`, lalu mengirim ID token Google ke `POST /auth/google`; server memverifikasinya sebelum menerbitkan pasangan bearer `accessToken` dan `refreshToken`. Keduanya disimpan di SecureStore pada perangkat native.
+
 ## Get started
 
 1. Install dependencies
