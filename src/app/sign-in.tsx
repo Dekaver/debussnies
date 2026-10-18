@@ -15,8 +15,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useSession } from "@/ctx";
-import { authApi } from "@/services/api";
 import { getGoogleIdToken } from "@/services/google-auth";
+import { authApi } from "../services/auth.api";
 
 type PendingAction = "email" | "google" | null;
 

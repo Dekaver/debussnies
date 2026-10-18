@@ -1,6 +1,6 @@
 import { createContext, use, type PropsWithChildren } from "react";
 
-import { authApi } from "./services/api";
+import { authApi } from "./services/auth.api";
 import { AuthTokens } from "./services/type.api";
 import { useStorageState } from "./useStorageState";
 
@@ -37,10 +37,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
 					if (!authTokens.accessToken || !authTokens.refreshToken) {
 						throw new Error("Token autentikasi tidak lengkap.");
 					}
-					await setStoredTokens(JSON.stringify(authTokens));
+					setStoredTokens(JSON.stringify(authTokens));
 				},
 				signOut: async () => {
-					await setStoredTokens(null);
+					setStoredTokens(null);
 				},
 				refreshSession: async () => {
 					if (!tokens?.refreshToken) {
@@ -52,7 +52,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 					const refreshedTokens = await authApi.refreshTokens(
 						tokens.refreshToken,
 					);
-					await setStoredTokens(JSON.stringify(refreshedTokens));
+					setStoredTokens(JSON.stringify(refreshedTokens));
 					return refreshedTokens.accessToken;
 				},
 				session: tokens?.accessToken ?? null,
