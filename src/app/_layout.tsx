@@ -2,11 +2,22 @@ import { Stack } from "expo-router";
 
 import { SessionProvider, useSession } from "@/ctx";
 import { SplashScreenController } from "@/splash";
+import { Text } from "react-native";
 
 function RootNavigator() {
-	const { session } = useSession();
+	const { session, isLoading } = useSession();
 
-	console.log("session", session);
+	if (isLoading) {
+		return (
+			<Stack
+				screenOptions={{
+					headerShown: false,
+				}}
+			>
+				<Text>Loading</Text>
+			</Stack>
+		);
+	}
 
 	return (
 		<Stack
