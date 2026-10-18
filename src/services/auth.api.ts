@@ -1,4 +1,4 @@
-import { getApiUrl } from "./api";
+import { appFetch } from "./api";
 import { AuthTokens } from "./type.api";
 
 const isAuthTokens = (value: unknown): value is AuthTokens => {
@@ -16,7 +16,7 @@ export const requestTokens = async (
 	path: string,
 	body: Record<string, string>,
 ): Promise<AuthTokens> => {
-	const response = await fetch(`${getApiUrl()}/auth/${path}`, {
+	const response = await appFetch(`/auth/${path}`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(body),
@@ -43,7 +43,7 @@ export const requestTokens = async (
 
 export const authApi = {
 	async createGoogleChallenge() {
-		const response = await fetch(`${getApiUrl()}/auth/google/challenge`, {
+		const response = await appFetch(`/auth/google/challenge`, {
 			method: "POST",
 		});
 		const result: unknown = await response.json();

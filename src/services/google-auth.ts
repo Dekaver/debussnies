@@ -1,7 +1,6 @@
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
-
-import { authApi } from "./api";
+import { authApi } from "./auth.api";
 
 WebBrowser.maybeCompleteAuthSession();
 

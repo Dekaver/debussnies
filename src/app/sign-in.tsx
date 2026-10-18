@@ -39,6 +39,7 @@ export default function SignInScreen() {
 			const tokens = await authApi.signIn(email.trim(), password);
 			await signIn(tokens);
 		} catch (error) {
+			console.error(error);
 			setErrorMessage(
 				error instanceof Error
 					? error.message
