@@ -15,9 +15,7 @@ export const authenticatedFetch = (
 ) => {
 	const headers = new Headers(init.headers);
 	headers.set("Authorization", `Bearer ${accessToken}`);
+	const safePath = path.startsWith("/") ? path : `/${path}`;
 
-	return fetch(`${getApiUrl()}${path.startsWith("/") ? path : `/${path}`}`, {
-		...init,
-		headers,
-	});
+	return fetch(`${getApiUrl()}${safePath}`, { ...init, headers });
 };
