@@ -15,9 +15,7 @@ function RootNavigator() {
 				screenOptions={{
 					headerShown: false,
 				}}
-			>
-				<Text>Loading</Text>
-			</Stack>
+			/>
 		);
 	}
 
